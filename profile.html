@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - SafeWayAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="iot-subscription.css">
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places"></script>
+    <link rel="stylesheet" href="profile-enhanced.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Map Background -->
+        <div id="map-background"></div>
+
+        <!-- App Content -->
+        <div class="app-content">
+            <!-- Header -->
+            <header class="app-header">
+                <button id="menu-toggle" class="icon-button">
+                    <span class="material-icons">menu</span>
+                </button>
+                <a href="index.html" class="app-title">
+                    <img src="images/safeway-logo-header.svg" alt="SafeWay Logo" class="header-logo">
+                </a>
+                <button class="user-avatar">
+                    <span class="material-icons">account_circle</span>
+                </button>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="page-title">
+                    <h2>User Profile</h2>
+                    <p>Manage your personal information and emergency contacts</p>
+                </div>
+
+                <!-- Profile Section -->
+                <div class="profile-section">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <span class="material-icons">account_circle</span>
+                        </div>
+                        <div class="profile-info">
+                            <h3 id="profile-name">John Doe</h3>
+                            <p id="profile-email">johndoe@example.com</p>
+                            <div class="profile-stats">
+                                <div class="stat-item">
+                                    <span class="material-icons">verified_user</span>
+                                    <span>Premium Member</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="material-icons">shield</span>
+                                    <span>Protected since 2022</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="edit-button" id="edit-profile-btn">
+                            <span class="material-icons">edit</span>
+                        </button>
+                    </div>
+
+                    <!-- Personal Information -->
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h3><span class="material-icons card-header-icon">badge</span>Personal Information</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="info-row">
+                                <div class="info-label">
+                                    <span class="material-icons info-icon">person</span>
+                                    Full Name
+                                </div>
+                                <div class="info-value" id="full-name">John Doe</div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-label">
+                                    <span class="material-icons info-icon">cake</span>
+                                    Age
+                                </div>
+                                <div class="info-value" id="age">32</div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-label">
+                                    <span class="material-icons info-icon">face</span>
+                                    Gender
+                                </div>
+                                <div class="info-value" id="gender">Male</div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-label">
+                                    <span class="material-icons info-icon">phone</span>
+                                    Phone Number
+                                </div>
+                                <div class="info-value" id="phone">+27 71 234 5678</div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-label">
+                                    <span class="material-icons info-icon">home</span>
+                                    Home Address
+                                </div>
+                                <div class="info-value" id="address">123 Main Street, Johannesburg, South Africa</div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-label">
+                                    <span class="material-icons info-icon">medical_services</span>
+                                    Medical Conditions
+                                </div>
+                                <div class="info-value" id="medical">None</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Contacts -->
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h3><span class="material-icons card-header-icon">contact_phone</span>Emergency Contacts</h3>
+                            <div class="header-actions">
+                                <div class="contact-count">2/5 contacts</div>
+                                <button class="add-button" id="add-contact-btn" title="Add Emergency Contact">
+                                    <span class="material-icons">add</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="contacts-intro">
+                                <div class="intro-icon">
+                                    <span class="material-icons">info</span>
+                                </div>
+                                <p>Emergency contacts will be notified immediately when you trigger an alert or when the system detects danger.</p>
+                            </div>
+
+                            <div id="emergency-contacts">
+                                <div class="contact-item">
+                                    <div class="contact-avatar">
+                                        <span class="material-icons">person</span>
+                                    </div>
+                                    <div class="contact-info">
+                                        <div class="contact-name">Sarah Doe</div>
+                                        <div class="contact-relation">Spouse</div>
+                                        <div class="contact-phone">
+                                            <span class="material-icons contact-phone-icon">phone</span>
+                                            +27 82 345 6789
+                                        </div>
+                                        <div class="contact-status">
+                                            <span class="status-badge primary">Primary Contact</span>
+                                        </div>
+                                    </div>
+                                    <div class="contact-actions">
+                                        <button class="icon-button small test-alert-btn" title="Test Alert" data-contact="Sarah Doe">
+                                            <span class="material-icons">send</span>
+                                        </button>
+                                        <button class="icon-button small edit-contact-btn" title="Edit Contact" data-contact-id="1">
+                                            <span class="material-icons">edit</span>
+                                        </button>
+                                        <button class="icon-button small delete-contact-btn" title="Remove Contact" data-contact-id="1">
+                                            <span class="material-icons">delete</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-avatar">
+                                        <span class="material-icons">person</span>
+                                    </div>
+                                    <div class="contact-info">
+                                        <div class="contact-name">Michael Doe</div>
+                                        <div class="contact-relation">Brother</div>
+                                        <div class="contact-phone">
+                                            <span class="material-icons contact-phone-icon">phone</span>
+                                            +27 83 456 7890
+                                        </div>
+                                    </div>
+                                    <div class="contact-actions">
+                                        <button class="icon-button small test-alert-btn" title="Test Alert" data-contact="Michael Doe">
+                                            <span class="material-icons">send</span>
+                                        </button>
+                                        <button class="icon-button small edit-contact-btn" title="Edit Contact" data-contact-id="2">
+                                            <span class="material-icons">edit</span>
+                                        </button>
+                                        <button class="icon-button small delete-contact-btn" title="Remove Contact" data-contact-id="2">
+                                            <span class="material-icons">delete</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="action-buttons">
+                                <button class="secondary-button" id="add-contact-btn-alt">
+                                    <span class="material-icons">add</span>
+                                    Add Another Emergency Contact
+                                </button>
+                                <button class="primary-button" id="save-contacts-btn" title="Save all changes to emergency contacts">
+                                    <span class="material-icons">save</span>
+                                    Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alert Settings -->
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h3><span class="material-icons card-header-icon">notifications_active</span>Alert Settings</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="setting-row">
+                                <div class="setting-label">
+                                    <div class="setting-title">
+                                        <span class="material-icons setting-icon">notifications</span>
+                                        Automatic Emergency Alerts
+                                    </div>
+                                    <div class="setting-description">Send alerts to emergency contacts when danger is detected</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="switch">
+                                        <input type="checkbox" id="auto-alerts" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="setting-row">
+                                <div class="setting-label">
+                                    <div class="setting-title">
+                                        <span class="material-icons setting-icon">location_on</span>
+                                        Location Sharing
+                                    </div>
+                                    <div class="setting-description">Share your location with emergency contacts during alerts</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="switch">
+                                        <input type="checkbox" id="location-sharing" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="setting-row">
+                                <div class="setting-label">
+                                    <div class="setting-title">
+                                        <span class="material-icons setting-icon">mic</span>
+                                        Audio Recording
+                                    </div>
+                                    <div class="setting-description">Record audio during emergency situations</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="switch">
+                                        <input type="checkbox" id="audio-recording">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="setting-row">
+                                <div class="setting-label">
+                                    <div class="setting-title">
+                                        <span class="material-icons setting-icon">sms</span>
+                                        SMS Notifications
+                                    </div>
+                                    <div class="setting-description">Send SMS alerts in addition to app notifications</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="switch">
+                                        <input type="checkbox" id="sms-notifications" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="setting-row">
+                                <div class="setting-label">
+                                    <div class="setting-title">
+                                        <span class="material-icons setting-icon">record_voice_over</span>
+                                        Voice Emergency Detection
+                                    </div>
+                                    <div class="setting-description">Automatically trigger emergency when you say "help"</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="switch">
+                                        <input type="checkbox" id="voice-toggle">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="voice-indicator" class="voice-indicator">
+                                <span class="pulse-dot"></span>
+                                <span class="indicator-text">Listening</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- IoT Devices Integration -->
+                    <div class="profile-card iot-card">
+                        <div class="card-header">
+                            <h3><span class="material-icons card-header-icon">devices</span>Azure IoT Devices</h3>
+                            <div class="header-actions">
+                                <div class="device-count">3/3 devices <span class="upgrade-note">Upgrade for more</span></div>
+                                <button class="add-button" id="add-device-btn" title="Add IoT Device">
+                                    <span class="material-icons">add</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="iot-intro">
+                                <div class="intro-icon azure">
+                                    <span class="material-icons">cloud</span>
+                                </div>
+                                <p>Connect your smart home devices to Azure IoT Hub for enhanced security monitoring and automated emergency responses.</p>
+                            </div>
+
+                            <div class="iot-tabs">
+                                <button class="iot-tab active" data-tab="all-devices">All Devices (3)</button>
+                                <button class="iot-tab" data-tab="connected">Connected (2)</button>
+                                <button class="iot-tab" data-tab="disconnected">Disconnected (1)</button>
+                            </div>
+
+                            <div class="iot-devices-container" id="iot-devices-list">
+                                <!-- Connected Devices -->
+                                <div class="iot-device-item">
+                                    <div class="device-icon">
+                                        <span class="material-icons">videocam</span>
+                                    </div>
+                                    <div class="device-info">
+                                        <div class="device-name">Smart Camera (Front Door)</div>
+                                        <div class="device-status connected">Connected</div>
+                                        <div class="device-details">Last activity: 5 minutes ago</div>
+                                        <div class="device-capabilities">
+                                            <span class="capability-badge">Motion Detection</span>
+                                            <span class="capability-badge">Night Vision</span>
+                                        </div>
+                                    </div>
+                                    <div class="device-actions">
+                                        <button class="icon-button small view-device-btn" title="View Live Feed" data-device-id="1">
+                                            <span class="material-icons">visibility</span>
+                                        </button>
+                                        <button class="icon-button small edit-device-btn" title="Configure Device" data-device-id="1" data-device-type="camera">
+                                            <span class="material-icons">settings</span>
+                                        </button>
+                                        <button class="icon-button small delete-device-btn" title="Remove Device" data-device-id="1">
+                                            <span class="material-icons">delete</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="iot-device-item">
+                                    <div class="device-icon">
+                                        <span class="material-icons">sensors</span>
+                                    </div>
+                                    <div class="device-info">
+                                        <div class="device-name">Motion Sensor (Backyard)</div>
+                                        <div class="device-status connected">Connected</div>
+                                        <div class="device-details">Last activity: 2 hours ago</div>
+                                        <div class="device-capabilities">
+                                            <span class="capability-badge">Motion Detection</span>
+                                            <span class="capability-badge">Weather Resistant</span>
+                                        </div>
+                                    </div>
+                                    <div class="device-actions">
+                                        <button class="icon-button small view-activity-btn" title="View Activity" data-device-id="2">
+                                            <span class="material-icons">timeline</span>
+                                        </button>
+                                        <button class="icon-button small edit-device-btn" title="Configure Device" data-device-id="2" data-device-type="motion">
+                                            <span class="material-icons">settings</span>
+                                        </button>
+                                        <button class="icon-button small delete-device-btn" title="Remove Device" data-device-id="2">
+                                            <span class="material-icons">delete</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="iot-device-item disconnected">
+                                    <div class="device-icon">
+                                        <span class="material-icons">door_front</span>
+                                    </div>
+                                    <div class="device-info">
+                                        <div class="device-name">Smart Door Lock</div>
+                                        <div class="device-status disconnected">Disconnected</div>
+                                        <div class="device-details">Last seen: 2 days ago</div>
+                                        <div class="device-capabilities">
+                                            <span class="capability-badge">Remote Access</span>
+                                            <span class="capability-badge">Auto-Lock</span>
+                                        </div>
+                                    </div>
+                                    <div class="device-actions">
+                                        <button class="icon-button small troubleshoot-btn" title="Troubleshoot" data-device-id="3">
+                                            <span class="material-icons">build</span>
+                                        </button>
+                                        <button class="icon-button small edit-device-btn" title="Configure Device" data-device-id="3" data-device-type="door">
+                                            <span class="material-icons">settings</span>
+                                        </button>
+                                        <button class="icon-button small delete-device-btn" title="Remove Device" data-device-id="3">
+                                            <span class="material-icons">delete</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="iot-hub-info">
+                                <div class="hub-status">
+                                    <span class="material-icons hub-icon">cloud_done</span>
+                                    <span>Azure IoT Hub: Connected</span>
+                                    <span class="hub-details">Last sync: Today, 14:32</span>
+                                </div>
+                                <div class="hub-actions">
+                                    <button class="secondary-button small" id="sync-devices-btn">
+                                        <span class="material-icons">sync</span>
+                                        Sync Devices
+                                    </button>
+                                    <button class="secondary-button small" id="view-analytics-btn">
+                                        <span class="material-icons">insights</span>
+                                        Analytics
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="action-buttons">
+                                <button class="secondary-button" id="add-device-btn-alt">
+                                    <span class="material-icons">add</span>
+                                    Add New IoT Device
+                                </button>
+                                <button class="primary-button" id="save-devices-btn" title="Save all changes to IoT devices and sync with Azure IoT Hub">
+                                    <span class="material-icons">save</span>
+                                    Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subscription Management -->
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h3><span class="material-icons card-header-icon">payments</span>Subscription Management</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="subscription-info">
+                                <div class="current-plan">
+                                    <div class="plan-badge standard">Standard</div>
+                                    <div class="plan-details">
+                                        <div class="plan-name">Standard Plan</div>
+                                        <div class="plan-price">R25/month</div>
+                                        <div class="plan-renewal">Renews on: 15 May 2023</div>
+                                    </div>
+                                </div>
+
+                                <div class="plan-features">
+                                    <h4>Your Plan Includes:</h4>
+                                    <ul class="features-list">
+                                        <li>
+                                            <span class="material-icons feature-icon">check_circle</span>
+                                            <span>Real-time safety alerts</span>
+                                        </li>
+                                        <li>
+                                            <span class="material-icons feature-icon">check_circle</span>
+                                            <span>Up to 5 emergency contacts</span>
+                                        </li>
+                                        <li>
+                                            <span class="material-icons feature-icon">check_circle</span>
+                                            <span>Voice emergency detection</span>
+                                        </li>
+                                        <li>
+                                            <span class="material-icons feature-icon">check_circle</span>
+                                            <span>Connect up to 3 IoT devices</span>
+                                        </li>
+                                        <li>
+                                            <span class="material-icons feature-icon">check_circle</span>
+                                            <span>30-day history retention</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <button class="primary-button" id="upgrade-plan-btn">Upgrade Plan</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Test Alert Button -->
+                    <div class="test-alert-container">
+                        <button id="test-alert-btn" class="test-alert-button">
+                            <span class="material-icons">notifications_active</span>
+                            Test Emergency Alert
+                        </button>
+                        <p class="test-alert-description">Send a test alert to your emergency contacts</p>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Emergency Button -->
+            <div class="emergency-button">
+                <button class="icon-button emergency">
+                    <span class="material-icons">emergency</span>
+                </button>
+            </div>
+
+            <!-- Status Icon -->
+            <div class="status-icon-button">
+                <button class="icon-button status">
+                    <span class="material-icons">shield</span>
+                </button>
+            </div>
+
+            <!-- AI Assistant Button -->
+            <div class="ai-assistant-button">
+                <button id="ai-assistant-btn" class="icon-button ai">
+                    <span class="material-icons">smart_toy</span>
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <footer class="app-footer">
+                <nav class="bottom-nav">
+                    <button class="nav-item" onclick="window.location.href='index.html'">
+                        <span class="material-icons">home</span>
+                        <span>Home</span>
+                    </button>
+                    <button class="nav-item" onclick="window.location.href='whistleblower.html'">
+                        <span class="material-icons">campaign</span>
+                        <span>Whistle Blower</span>
+                    </button>
+                    <button class="nav-item">
+                        <span class="material-icons">notifications_active</span>
+                        <span>Alerts</span>
+                    </button>
+                    <button class="nav-item" onclick="window.location.href='history.html'">
+                        <span class="material-icons">history</span>
+                        <span>History</span>
+                    </button>
+                </nav>
+            </footer>
+        </div>
+
+        <!-- Side Menu -->
+        <div id="side-menu" class="side-menu">
+            <div class="menu-header">
+                <div class="menu-logo">
+                    <img src="images/safeway-logo-header.svg" alt="SafeWay Logo" class="side-menu-logo">
+                </div>
+                <button id="close-menu" class="icon-button">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <nav class="menu-nav">
+                <a href="index.html" class="menu-item">
+                    <span class="material-icons">home</span>
+                    <span>Home</span>
+                </a>
+                <a href="whistleblower.html" class="menu-item">
+                    <span class="material-icons">campaign</span>
+                    <span>Whistle Blower</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="material-icons">notifications_active</span>
+                    <span>Alerts</span>
+                </a>
+                <a href="history.html" class="menu-item">
+                    <span class="material-icons">history</span>
+                    <span>History</span>
+                </a>
+                <a href="saferoute.html" class="menu-item">
+                    <span class="material-icons">route</span>
+                    <span>Safe Route</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Profile</h3>
+                <button class="close-modal-btn">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-profile-form">
+                    <div class="form-group">
+                        <label for="edit-full-name">Full Name</label>
+                        <input type="text" id="edit-full-name" class="form-control" value="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-age">Age</label>
+                        <input type="number" id="edit-age" class="form-control" value="32">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-gender">Gender</label>
+                        <select id="edit-gender" class="form-control">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-phone">Phone Number</label>
+                        <input type="tel" id="edit-phone" class="form-control" value="+27 71 234 5678">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-email">Email</label>
+                        <input type="email" id="edit-email" class="form-control" value="johndoe@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-address">Home Address</label>
+                        <input type="text" id="edit-address" class="form-control" value="123 Main Street, Johannesburg, South Africa">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-medical">Medical Conditions</label>
+                        <textarea id="edit-medical" class="form-control" rows="3">None</textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="primary-button">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Contact Modal -->
+    <div id="add-contact-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><span class="material-icons modal-header-icon">person_add</span> Add Emergency Contact</h3>
+                <button class="close-modal-btn">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="contact-info-banner">
+                    <span class="material-icons">info</span>
+                    <p>Emergency contacts will be notified immediately when you trigger an alert or when the system detects danger.</p>
+                </div>
+
+                <form id="add-contact-form">
+                    <div class="form-group">
+                        <label for="contact-name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="contact-name" class="form-control" placeholder="Contact's full name" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="contact-relation">Relationship <span class="required">*</span></label>
+                            <select id="contact-relation" class="form-control" required>
+                                <option value="">Select relationship...</option>
+                                <option value="spouse">Spouse/Partner</option>
+                                <option value="parent">Parent</option>
+                                <option value="child">Child</option>
+                                <option value="sibling">Sibling</option>
+                                <option value="friend">Friend</option>
+                                <option value="colleague">Colleague</option>
+                                <option value="neighbor">Neighbor</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group half">
+                            <label for="contact-priority">Priority</label>
+                            <select id="contact-priority" class="form-control">
+                                <option value="primary">Primary Contact</option>
+                                <option value="secondary" selected>Secondary Contact</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-phone">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="contact-phone" class="form-control" placeholder="Contact's phone number" required>
+                        <div class="field-hint">This number will receive emergency SMS alerts</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-email">Email Address</label>
+                        <input type="email" id="contact-email" class="form-control" placeholder="Contact's email address">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Notification Settings</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="notification-settings" value="emergency" checked>
+                                <span>Emergency alerts</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="notification-settings" value="location" checked>
+                                <span>Location sharing during emergencies</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="notification-settings" value="audio">
+                                <span>Audio recording access</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-notes">Additional Notes</label>
+                        <textarea id="contact-notes" class="form-control" rows="2" placeholder="Any additional information about this contact"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="secondary-button close-modal-btn">Cancel</button>
+                        <button type="submit" class="primary-button">Add Contact</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Contact Modal -->
+    <div id="edit-contact-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><span class="material-icons modal-header-icon">edit</span> Edit Emergency Contact</h3>
+                <button class="close-modal-btn">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-contact-form">
+                    <input type="hidden" id="edit-contact-id">
+
+                    <div class="form-group">
+                        <label for="edit-contact-name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="edit-contact-name" class="form-control" placeholder="Contact's full name" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="edit-contact-relation">Relationship <span class="required">*</span></label>
+                            <select id="edit-contact-relation" class="form-control" required>
+                                <option value="">Select relationship...</option>
+                                <option value="spouse">Spouse/Partner</option>
+                                <option value="parent">Parent</option>
+                                <option value="child">Child</option>
+                                <option value="sibling">Sibling</option>
+                                <option value="friend">Friend</option>
+                                <option value="colleague">Colleague</option>
+                                <option value="neighbor">Neighbor</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group half">
+                            <label for="edit-contact-priority">Priority</label>
+                            <select id="edit-contact-priority" class="form-control">
+                                <option value="primary">Primary Contact</option>
+                                <option value="secondary">Secondary Contact</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-contact-phone">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="edit-contact-phone" class="form-control" placeholder="Contact's phone number" required>
+                        <div class="field-hint">This number will receive emergency SMS alerts</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-contact-email">Email Address</label>
+                        <input type="email" id="edit-contact-email" class="form-control" placeholder="Contact's email address">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Notification Settings</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="edit-notification-settings" value="emergency" checked>
+                                <span>Emergency alerts</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="edit-notification-settings" value="location" checked>
+                                <span>Location sharing during emergencies</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="edit-notification-settings" value="audio">
+                                <span>Audio recording access</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-contact-notes">Additional Notes</label>
+                        <textarea id="edit-contact-notes" class="form-control" rows="2" placeholder="Any additional information about this contact"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="secondary-button close-modal-btn">Cancel</button>
+                        <button type="submit" class="primary-button">Update Contact</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Alert Modal -->
+    <div id="test-alert-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Send Test Alert</h3>
+                <button class="close-modal-btn">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-message">This will send a test emergency alert to all your emergency contacts. They will be notified that this is only a test.</p>
+                <div class="form-actions">
+                    <button id="confirm-test-alert" class="primary-button">Send Test Alert</button>
+                    <button class="secondary-button close-modal-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add IoT Device Modal -->
+    <div id="add-device-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><span class="material-icons modal-header-icon">devices_other</span> Add IoT Device</h3>
+                <button class="close-modal-btn">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-tabs">
+                    <button class="modal-tab active" data-tab="manual-setup">Manual Setup</button>
+                    <button class="modal-tab" data-tab="scan-device">Scan Device</button>
+                    <button class="modal-tab" data-tab="import-config">Import Config</button>
+                </div>
+
+                <div class="azure-info-banner">
+                    <span class="material-icons">info</span>
+                    <p>Devices will be connected to your Azure IoT Hub instance for secure communication and management.</p>
+                </div>
+
+                <form id="add-device-form">
+                    <div class="form-group">
+                        <label for="device-name">Device Name <span class="required">*</span></label>
+                        <input type="text" id="device-name" class="form-control" placeholder="e.g. Front Door Camera" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="device-type">Device Type <span class="required">*</span></label>
+                        <select id="device-type" class="form-control" required>
+                            <option value="">Select device type...</option>
+                            <option value="camera">Security Camera</option>
+                            <option value="motion">Motion Sensor</option>
+                            <option value="door">Smart Door Lock</option>
+                            <option value="window">Window Sensor</option>
+                            <option value="alarm">Alarm System</option>
+                            <option value="doorbell">Smart Doorbell</option>
+                            <option value="smoke">Smoke Detector</option>
+                            <option value="water">Water Leak Sensor</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="device-id">Device ID <span class="required">*</span></label>
+                            <input type="text" id="device-id" class="form-control" placeholder="Enter device ID or serial number" required>
+                        </div>
+                        <div class="form-group half">
+                            <label for="device-location">Location <span class="required">*</span></label>
+                            <input type="text" id="device-location" class="form-control" placeholder="e.g. Front Door, Backyard" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="device-manufacturer">Manufacturer</label>
+                        <select id="device-manufacturer" class="form-control">
+                            <option value="">Select manufacturer...</option>
+                            <option value="ring">Ring</option>
+                            <option value="nest">Nest</option>
+                            <option value="arlo">Arlo</option>
+                            <option value="wyze">Wyze</option>
+                            <option value="eufy">Eufy</option>
+                            <option value="august">August</option>
+                            <option value="simplisafe">SimpliSafe</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Connection Method <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="connection-method" value="direct" checked>
+                                <span>Direct to Azure IoT Hub</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="connection-method" value="gateway">
+                                <span>Via IoT Gateway</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Security Settings</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="security-settings" value="encryption" checked>
+                                <span>Enable end-to-end encryption</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="security-settings" value="alerts" checked>
+                                <span>Send alerts on suspicious activity</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="security-settings" value="auto-update" checked>
+                                <span>Enable automatic firmware updates</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="device-notes">Additional Notes</label>
+                        <textarea id="device-notes" class="form-control" rows="2" placeholder="Any additional information about this device"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="secondary-button close-modal-btn">Cancel</button>
+                        <button type="submit" class="primary-button">Add Device</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms and Conditions Modal -->
+    <div id="terms-modal" class="modal terms-modal">
+        <div class="modal-content terms-content">
+            <div class="modal-header">
+                <h3><span class="material-icons modal-header-icon">gavel</span> Terms and Conditions</h3>
+            </div>
+            <div class="modal-body">
+                <div class="terms-section">
+                    <h4>Welcome to SafeWayAI</h4>
+                    <p>Please read these terms and conditions carefully before using our application.</p>
+
+                    <div class="terms-scrollable">
+                        <h5>1. Acceptance of Terms</h5>
+                        <p>By accessing or using SafeWayAI, you agree to be bound by these Terms and Conditions and our Privacy Policy. If you disagree with any part of the terms, you may not access the service.</p>
+
+                        <h5>2. Data Collection and Usage</h5>
+                        <p>SafeWayAI collects and processes the following types of data:</p>
+                        <ul>
+                            <li><strong>Personal Information:</strong> Name, contact details, emergency contacts</li>
+                            <li><strong>Location Data:</strong> Your real-time location for safety monitoring and emergency response</li>
+                            <li><strong>Voice Data:</strong> Audio recordings when emergency voice detection is enabled</li>
+                            <li><strong>IoT Device Data:</strong> Information from connected smart devices</li>
+                            <li><strong>Usage Data:</strong> How you interact with the application</li>
+                        </ul>
+
+                        <h5>3. How We Use Your Data</h5>
+                        <p>We use your data to:</p>
+                        <ul>
+                            <li>Provide and maintain our service</li>
+                            <li>Notify you about changes to our service</li>
+                            <li>Allow you to participate in interactive features when you choose to do so</li>
+                            <li>Provide customer support</li>
+                            <li>Monitor usage of our service</li>
+                            <li>Detect, prevent and address technical issues</li>
+                            <li>Respond to emergencies and alert your emergency contacts</li>
+                            <li>Integrate with Azure IoT Hub for device management</li>
+                        </ul>
+
+                        <h5>4. Data Sharing</h5>
+                        <p>We may share your data with:</p>
+                        <ul>
+                            <li>Your designated emergency contacts (during emergencies)</li>
+                            <li>Emergency services (police, ambulance, etc.)</li>
+                            <li>Microsoft Azure (for IoT device management and cloud services)</li>
+                            <li>Service providers who assist in delivering our services</li>
+                        </ul>
+
+                        <h5>5. Data Security</h5>
+                        <p>We implement appropriate security measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the Internet or electronic storage is 100% secure.</p>
+
+                        <h5>6. Your Rights</h5>
+                        <p>You have the right to:</p>
+                        <ul>
+                            <li>Access your personal data</li>
+                            <li>Correct inaccurate data</li>
+                            <li>Request deletion of your data</li>
+                            <li>Object to processing of your data</li>
+                            <li>Request restriction of processing your data</li>
+                            <li>Request transfer of your data</li>
+                            <li>Withdraw consent</li>
+                        </ul>
+
+                        <h5>7. Changes to Terms</h5>
+                        <p>We may modify these Terms at any time. We will notify you of any changes by posting the new Terms on this page and updating the "Last Updated" date.</p>
+
+                        <h5>8. Contact Us</h5>
+                        <p>If you have any questions about these Terms, please contact us at support@safewayai.com</p>
+
+                        <p class="terms-last-updated">Last Updated: May 15, 2023</p>
+                    </div>
+                </div>
+
+                <div class="consent-section">
+                    <h4>Data Collection Consent</h4>
+                    <p>To provide our safety services, we need your consent to collect and process your data as described in our terms.</p>
+
+                    <div class="consent-options">
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="consent-personal" required>
+                            <span>I consent to the collection and processing of my personal information</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="consent-location" required>
+                            <span>I consent to the collection and use of my location data</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="consent-voice">
+                            <span>I consent to audio recording during emergency situations (optional)</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="consent-iot">
+                            <span>I consent to the collection of data from my IoT devices (optional)</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="consent-marketing">
+                            <span>I would like to receive safety tips and updates (optional)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-actions terms-actions">
+                    <button type="button" id="decline-terms-btn" class="secondary-button">Decline</button>
+                    <button type="button" id="accept-terms-btn" class="primary-button" disabled>
+                        <span class="material-icons">check_circle</span>
+                        Accept & Continue
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit IoT Device Modal -->
+    <div id="edit-device-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><span class="material-icons modal-header-icon">settings</span> Configure IoT Device</h3>
+                <button class="close-modal-btn">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-device-form">
+                    <input type="hidden" id="edit-device-id">
+                    <input type="hidden" id="edit-device-type-hidden">
+
+                    <div class="device-status-banner">
+                        <div class="device-status-icon connected">
+                            <span class="material-icons">check_circle</span>
+                        </div>
+                        <div class="device-status-info">
+                            <div class="device-status-title">Device Status: <span id="edit-device-status-text">Connected</span></div>
+                            <div class="device-status-details">Last activity: <span id="edit-device-last-activity">5 minutes ago</span></div>
+                        </div>
+                        <button type="button" class="secondary-button small" id="refresh-device-status-btn">
+                            <span class="material-icons">refresh</span>
+                            Refresh
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-device-name">Device Name <span class="required">*</span></label>
+                        <input type="text" id="edit-device-name" class="form-control" placeholder="e.g. Front Door Camera" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="edit-device-location">Location <span class="required">*</span></label>
+                            <input type="text" id="edit-device-location" class="form-control" placeholder="e.g. Front Door, Backyard" required>
+                        </div>
+                        <div class="form-group half">
+                            <label for="edit-device-firmware">Firmware Version</label>
+                            <div class="firmware-info">
+                                <input type="text" id="edit-device-firmware" class="form-control" readonly>
+                                <button type="button" class="update-firmware-btn" id="update-firmware-btn">
+                                    <span class="material-icons">system_update</span>
+                                    Update
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Connection Settings</label>
+                        <div class="connection-details">
+                            <div class="connection-item">
+                                <span class="connection-label">Connection Type:</span>
+                                <span class="connection-value" id="edit-connection-type">Direct to Azure IoT Hub</span>
+                            </div>
+                            <div class="connection-item">
+                                <span class="connection-label">IP Address:</span>
+                                <span class="connection-value" id="edit-device-ip">192.168.1.45</span>
+                            </div>
+                            <div class="connection-item">
+                                <span class="connection-label">MAC Address:</span>
+                                <span class="connection-value" id="edit-device-mac">00:1B:44:11:3A:B7</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Security Settings</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="edit-security-settings" value="encryption" checked>
+                                <span>Enable end-to-end encryption</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="edit-security-settings" value="alerts" checked>
+                                <span>Send alerts on suspicious activity</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="edit-security-settings" value="auto-update" checked>
+                                <span>Enable automatic firmware updates</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Device-Specific Settings</label>
+                        <div id="camera-settings" class="device-specific-settings">
+                            <div class="form-row">
+                                <div class="form-group half">
+                                    <label for="camera-resolution">Resolution</label>
+                                    <select id="camera-resolution" class="form-control">
+                                        <option value="720p">HD (720p)</option>
+                                        <option value="1080p" selected>Full HD (1080p)</option>
+                                        <option value="4k">4K Ultra HD</option>
+                                    </select>
+                                </div>
+                                <div class="form-group half">
+                                    <label for="camera-recording">Recording Mode</label>
+                                    <select id="camera-recording" class="form-control">
+                                        <option value="motion">Motion Detection Only</option>
+                                        <option value="continuous">Continuous Recording</option>
+                                        <option value="scheduled">Scheduled Recording</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="checkbox-group">
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="camera-features" value="night-vision" checked>
+                                    <span>Enable Night Vision</span>
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="camera-features" value="motion-detection" checked>
+                                    <span>Enable Motion Detection</span>
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="camera-features" value="person-detection" checked>
+                                    <span>Enable Person Detection</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="motion-settings" class="device-specific-settings" style="display: none;">
+                            <div class="form-row">
+                                <div class="form-group half">
+                                    <label for="motion-sensitivity">Sensitivity</label>
+                                    <select id="motion-sensitivity" class="form-control">
+                                        <option value="low">Low</option>
+                                        <option value="medium" selected>Medium</option>
+                                        <option value="high">High</option>
+                                    </select>
+                                </div>
+                                <div class="form-group half">
+                                    <label for="motion-range">Detection Range</label>
+                                    <select id="motion-range" class="form-control">
+                                        <option value="short">Short (3m)</option>
+                                        <option value="medium" selected>Medium (5m)</option>
+                                        <option value="long">Long (8m)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="door-settings" class="device-specific-settings" style="display: none;">
+                            <div class="form-row">
+                                <div class="form-group half">
+                                    <label for="door-auto-lock">Auto-Lock Timer</label>
+                                    <select id="door-auto-lock" class="form-control">
+                                        <option value="disabled">Disabled</option>
+                                        <option value="30">30 seconds</option>
+                                        <option value="60" selected>1 minute</option>
+                                        <option value="300">5 minutes</option>
+                                    </select>
+                                </div>
+                                <div class="form-group half">
+                                    <label for="door-access">Access Method</label>
+                                    <select id="door-access" class="form-control">
+                                        <option value="app">App Only</option>
+                                        <option value="code" selected>PIN Code</option>
+                                        <option value="both">Both</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-device-notes">Additional Notes</label>
+                        <textarea id="edit-device-notes" class="form-control" rows="2" placeholder="Any additional information about this device"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="secondary-button close-modal-btn">Cancel</button>
+                        <button type="submit" class="primary-button">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upgrade Plan Modal -->
+    <div id="upgrade-plan-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Choose Your Plan</h3>
+                <button class="close-modal-btn">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="plans-container">
+                    <!-- Basic Plan -->
+                    <div class="plan-card">
+                        <div class="plan-header basic">
+                            <h4>Basic</h4>
+                            <div class="plan-price">
+                                <span class="price">R5</span>
+                                <span class="period">/month</span>
+                            </div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>Basic safety alerts</span>
+                                </li>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>Up to 2 emergency contacts</span>
+                                </li>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>7-day history retention</span>
+                                </li>
+                                <li class="feature-disabled">
+                                    <span class="material-icons feature-cross">close</span>
+                                    <span>IoT device integration</span>
+                                </li>
+                                <li class="feature-disabled">
+                                    <span class="material-icons feature-cross">close</span>
+                                    <span>Voice emergency detection</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <button class="plan-select-btn" data-plan="basic">Select Plan</button>
+                    </div>
+
+                    <!-- Standard Plan -->
+                    <div class="plan-card recommended">
+                        <div class="recommended-badge">POPULAR</div>
+                        <div class="plan-header standard">
+                            <h4>Standard</h4>
+                            <div class="plan-price">
+                                <span class="price">R25</span>
+                                <span class="period">/month</span>
+                            </div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>Real-time safety alerts</span>
+                                </li>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>Up to 5 emergency contacts</span>
+                                </li>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>Voice emergency detection</span>
+                                </li>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>Connect up to 3 IoT devices</span>
+                                </li>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>30-day history retention</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <button class="plan-select-btn current" data-plan="standard">Current Plan</button>
+                    </div>
+
+                    <!-- Premium Plan -->
+                    <div class="plan-card">
+                        <div class="plan-header premium">
+                            <h4>Premium</h4>
+                            <div class="plan-price">
+                                <span class="price">R75</span>
+                                <span class="period">/month</span>
+                            </div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>All Standard features</span>
+                                </li>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>Unlimited emergency contacts</span>
+                                </li>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>Connect up to 10 IoT devices</span>
+                                </li>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>90-day history retention</span>
+                                </li>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>Priority emergency response</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <button class="plan-select-btn" data-plan="premium">Select Plan</button>
+                    </div>
+
+                    <!-- Estate Plan -->
+                    <div class="plan-card">
+                        <div class="plan-header estate">
+                            <h4>Estate</h4>
+                            <div class="plan-price">
+                                <span class="price">R250</span>
+                                <span class="period">/month</span>
+                            </div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>All Premium features</span>
+                                </li>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>Unlimited IoT devices</span>
+                                </li>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>Estate-wide security monitoring</span>
+                                </li>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>Security guard integration</span>
+                                </li>
+                                <li>
+                                    <span class="material-icons feature-check">check</span>
+                                    <span>Dedicated support team</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <button class="plan-select-btn" data-plan="estate">Select Plan</button>
+                    </div>
+                </div>
+
+                <div class="plan-note">
+                    <p>All plans include access to the SafeWay mobile app and basic safety features. Subscription will be charged to your payment method on file.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Assistant Modal -->
+    <div id="ai-assistant-modal" class="modal">
+        <div class="modal-content ai-assistant-modal-content">
+            <div class="modal-header">
+                <div class="ai-assistant-header">
+                    <div class="ai-logo-container">
+                        <img src="images/safeway-logo-header.svg" alt="SafeWay Logo" class="ai-modal-logo">
+                    </div>
+                    <h3>AI Assistant</h3>
+                </div>
+                <button class="close-modal-btn">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="ai-chat-container">
+                    <div id="ai-chat-messages" class="ai-chat-messages">
+                        <div class="ai-message">
+                            <div class="ai-avatar">
+                                <span class="material-icons">smart_toy</span>
+                            </div>
+                            <div class="message-content">
+                                <p>Hello! I'm your Azure-powered SafeWay AI Assistant. I can help prevent crime through personalized safety:</p>
+                                <ul class="ai-suggestions">
+                                    <li><button class="ai-suggestion-btn" data-query="How does Azure protect my personal data?">How does Azure protect my personal data?</button></li>
+                                    <li><button class="ai-suggestion-btn" data-query="How does Azure AI personalize crime prevention?">How does Azure AI personalize crime prevention?</button></li>
+                                    <li><button class="ai-suggestion-btn" data-query="How does Azure power the voice emergency system?">How does Azure power the voice emergency system?</button></li>
+                                    <li><button class="ai-suggestion-btn" data-query="What crime prevention insights can you share?">What crime prevention insights can you share?</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ai-chat-input">
+                        <input type="text" id="ai-user-input" placeholder="Ask me anything about your profile...">
+                        <button id="ai-send-btn">
+                            <span class="material-icons">send</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="profile.js"></script>
+    <script src="voice-detection.js"></script>
+    <script src="ai-assistant.js"></script>
+    <script src="iot-subscription.js"></script>
+    <script src="terms-conditions.js"></script>
+</body>
+</html>
+

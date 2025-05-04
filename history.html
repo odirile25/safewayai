@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alert History - SafeWayAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places"></script>
+    <link rel="stylesheet" href="history.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Map Background -->
+        <div id="map-background"></div>
+
+        <!-- App Content -->
+        <div class="app-content">
+            <!-- Header -->
+            <header class="app-header">
+                <button id="menu-toggle" class="icon-button">
+                    <span class="material-icons">menu</span>
+                </button>
+                <a href="index.html" class="app-title">
+                    <img src="images/safeway-logo-header.svg" alt="SafeWay Logo" class="header-logo">
+                </a>
+                <button class="user-avatar" onclick="window.location.href='profile.html'">
+                    <span class="material-icons">account_circle</span>
+                </button>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="page-title">
+                    <h2>Alert History</h2>
+                    <p>View your past alerts and safety notifications</p>
+                </div>
+
+                <!-- History Filters -->
+                <div class="history-filters">
+                    <div class="filter-group">
+                        <label for="filter-type">Filter by Type</label>
+                        <select id="filter-type" class="filter-select">
+                            <option value="all">All Alerts</option>
+                            <option value="emergency">Emergency</option>
+                            <option value="danger">Danger Detection</option>
+                            <option value="report">Whistle Blower Reports</option>
+                            <option value="system">System Notifications</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-date">Filter by Date</label>
+                        <select id="filter-date" class="filter-select">
+                            <option value="all">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- History Timeline -->
+                <div class="history-timeline">
+                    <!-- Today -->
+                    <div class="timeline-section">
+                        <div class="timeline-header">
+                            <h3>Today</h3>
+                            <span class="date-label">May 15, 2023</span>
+                        </div>
+
+                        <div class="timeline-items">
+                            <div class="timeline-item emergency">
+                                <div class="timeline-icon">
+                                    <span class="material-icons">emergency</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h4>Emergency Button Pressed</h4>
+                                        <span class="time-label">10:45 AM</span>
+                                    </div>
+                                    <p class="timeline-description">
+                                        Emergency alert triggered manually. Alerts sent to 3 emergency contacts.
+                                    </p>
+                                    <div class="timeline-location">
+                                        <span class="material-icons">location_on</span>
+                                        <span>Central Park, Johannesburg</span>
+                                    </div>
+                                    <div class="timeline-actions">
+                                        <button class="action-button">
+                                            <span class="material-icons">visibility</span>
+                                            <span>View Details</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item system">
+                                <div class="timeline-icon">
+                                    <span class="material-icons">notifications</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h4>Safety Check Completed</h4>
+                                        <span class="time-label">9:30 AM</span>
+                                    </div>
+                                    <p class="timeline-description">
+                                        Routine safety check completed. No issues detected.
+                                    </p>
+                                    <div class="timeline-actions">
+                                        <button class="action-button">
+                                            <span class="material-icons">visibility</span>
+                                            <span>View Details</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Yesterday -->
+                    <div class="timeline-section">
+                        <div class="timeline-header">
+                            <h3>Yesterday</h3>
+                            <span class="date-label">May 14, 2023</span>
+                        </div>
+
+                        <div class="timeline-items">
+                            <div class="timeline-item danger">
+                                <div class="timeline-icon">
+                                    <span class="material-icons">warning</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h4>Danger Detected</h4>
+                                        <span class="time-label">8:15 PM</span>
+                                    </div>
+                                    <p class="timeline-description">
+                                        Unusual activity detected in your vicinity. Safety alert triggered.
+                                    </p>
+                                    <div class="timeline-location">
+                                        <span class="material-icons">location_on</span>
+                                        <span>Main Street & 5th Avenue</span>
+                                    </div>
+                                    <div class="timeline-actions">
+                                        <button class="action-button">
+                                            <span class="material-icons">visibility</span>
+                                            <span>View Details</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item report">
+                                <div class="timeline-icon">
+                                    <span class="material-icons">campaign</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h4>Whistle Blower Report Submitted</h4>
+                                        <span class="time-label">3:45 PM</span>
+                                    </div>
+                                    <p class="timeline-description">
+                                        You reported suspicious activity near Oak Street. Report ID: WB-2023-05-14-001.
+                                    </p>
+                                    <div class="timeline-location">
+                                        <span class="material-icons">location_on</span>
+                                        <span>Oak Street & Maple Avenue</span>
+                                    </div>
+                                    <div class="timeline-actions">
+                                        <button class="action-button">
+                                            <span class="material-icons">visibility</span>
+                                            <span>View Details</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- This Week -->
+                    <div class="timeline-section">
+                        <div class="timeline-header">
+                            <h3>This Week</h3>
+                            <span class="date-label">May 8 - May 13, 2023</span>
+                        </div>
+
+                        <div class="timeline-items">
+                            <div class="timeline-item system">
+                                <div class="timeline-icon">
+                                    <span class="material-icons">route</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h4>Safe Route Navigation Started</h4>
+                                        <span class="time-label">May 12, 2:30 PM</span>
+                                    </div>
+                                    <p class="timeline-description">
+                                        You started navigation using the Safe Route feature.
+                                    </p>
+                                    <div class="timeline-location">
+                                        <span class="material-icons">location_on</span>
+                                        <span>From: Home, To: Shopping Mall</span>
+                                    </div>
+                                    <div class="timeline-actions">
+                                        <button class="action-button">
+                                            <span class="material-icons">visibility</span>
+                                            <span>View Details</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item emergency">
+                                <div class="timeline-icon">
+                                    <span class="material-icons">emergency</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h4>Test Emergency Alert</h4>
+                                        <span class="time-label">May 10, 11:20 AM</span>
+                                    </div>
+                                    <p class="timeline-description">
+                                        You sent a test emergency alert to your emergency contacts.
+                                    </p>
+                                    <div class="timeline-actions">
+                                        <button class="action-button">
+                                            <span class="material-icons">visibility</span>
+                                            <span>View Details</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item danger">
+                                <div class="timeline-icon">
+                                    <span class="material-icons">warning</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h4>High Risk Area Alert</h4>
+                                        <span class="time-label">May 9, 9:45 PM</span>
+                                    </div>
+                                    <p class="timeline-description">
+                                        You entered a high-risk area. Safety precautions advised.
+                                    </p>
+                                    <div class="timeline-location">
+                                        <span class="material-icons">location_on</span>
+                                        <span>Downtown District</span>
+                                    </div>
+                                    <div class="timeline-actions">
+                                        <button class="action-button">
+                                            <span class="material-icons">visibility</span>
+                                            <span>View Details</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Last Month -->
+                    <div class="timeline-section">
+                        <div class="timeline-header">
+                            <h3>Last Month</h3>
+                            <span class="date-label">April 2023</span>
+                        </div>
+
+                        <div class="timeline-items">
+                            <div class="timeline-item report">
+                                <div class="timeline-icon">
+                                    <span class="material-icons">campaign</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h4>Community Alert Received</h4>
+                                        <span class="time-label">April 28, 4:15 PM</span>
+                                    </div>
+                                    <p class="timeline-description">
+                                        Alert received about road hazard in your frequent route area.
+                                    </p>
+                                    <div class="timeline-location">
+                                        <span class="material-icons">location_on</span>
+                                        <span>Elm Street & Pine Road</span>
+                                    </div>
+                                    <div class="timeline-actions">
+                                        <button class="action-button">
+                                            <span class="material-icons">visibility</span>
+                                            <span>View Details</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item emergency">
+                                <div class="timeline-icon">
+                                    <span class="material-icons">emergency</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h4>Emergency Button Pressed</h4>
+                                        <span class="time-label">April 15, 10:30 PM</span>
+                                    </div>
+                                    <p class="timeline-description">
+                                        Emergency alert triggered manually. Alerts sent to 3 emergency contacts.
+                                    </p>
+                                    <div class="timeline-location">
+                                        <span class="material-icons">location_on</span>
+                                        <span>Parking Garage, Downtown</span>
+                                    </div>
+                                    <div class="timeline-actions">
+                                        <button class="action-button">
+                                            <span class="material-icons">visibility</span>
+                                            <span>View Details</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Load More Button -->
+                <div class="load-more-container">
+                    <button id="load-more-btn" class="load-more-button">
+                        <span class="material-icons">expand_more</span>
+                        Load More History
+                    </button>
+                </div>
+            </main>
+
+            <!-- Emergency Button -->
+            <div class="emergency-button">
+                <button class="icon-button emergency">
+                    <span class="material-icons">emergency</span>
+                </button>
+            </div>
+
+            <!-- Status Icon -->
+            <div class="status-icon-button">
+                <button class="icon-button status">
+                    <span class="material-icons">shield</span>
+                </button>
+            </div>
+
+            <!-- AI Assistant Button -->
+            <div class="ai-assistant-button">
+                <button id="ai-assistant-btn" class="icon-button ai">
+                    <span class="material-icons">smart_toy</span>
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <footer class="app-footer">
+                <nav class="bottom-nav">
+                    <button class="nav-item" onclick="window.location.href='index.html'">
+                        <span class="material-icons">home</span>
+                        <span>Home</span>
+                    </button>
+                    <button class="nav-item" onclick="window.location.href='whistleblower.html'">
+                        <span class="material-icons">campaign</span>
+                        <span>Whistle Blower</span>
+                    </button>
+                    <button class="nav-item">
+                        <span class="material-icons">notifications_active</span>
+                        <span>Alerts</span>
+                    </button>
+                    <button class="nav-item active">
+                        <span class="material-icons">history</span>
+                        <span>History</span>
+                    </button>
+                </nav>
+            </footer>
+        </div>
+
+        <!-- Side Menu -->
+        <div id="side-menu" class="side-menu">
+            <div class="menu-header">
+                <div class="menu-logo">
+                    <img src="images/safeway-logo-header.svg" alt="SafeWay Logo" class="side-menu-logo">
+                </div>
+                <button id="close-menu" class="icon-button">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <nav class="menu-nav">
+                <a href="index.html" class="menu-item">
+                    <span class="material-icons">home</span>
+                    <span>Home</span>
+                </a>
+                <a href="whistleblower.html" class="menu-item">
+                    <span class="material-icons">campaign</span>
+                    <span>Whistle Blower</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="material-icons">notifications_active</span>
+                    <span>Alerts</span>
+                </a>
+                <a href="history.html" class="menu-item active">
+                    <span class="material-icons">history</span>
+                    <span>History</span>
+                </a>
+                <a href="saferoute.html" class="menu-item">
+                    <span class="material-icons">route</span>
+                    <span>Safe Route</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Alert Details Modal -->
+    <div id="alert-details-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Alert Details</h3>
+                <button class="close-modal-btn">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="alert-details-content">
+                    <!-- Content will be dynamically populated -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Assistant Modal -->
+    <div id="ai-assistant-modal" class="modal">
+        <div class="modal-content ai-assistant-modal-content">
+            <div class="modal-header">
+                <div class="ai-assistant-header">
+                    <div class="ai-logo-container">
+                        <img src="images/safeway-logo-header.svg" alt="SafeWay Logo" class="ai-modal-logo">
+                    </div>
+                    <h3>AI Assistant</h3>
+                </div>
+                <button class="close-modal-btn">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="ai-chat-container">
+                    <div id="ai-chat-messages" class="ai-chat-messages">
+                        <div class="ai-message">
+                            <div class="ai-avatar">
+                                <span class="material-icons">smart_toy</span>
+                            </div>
+                            <div class="message-content">
+                                <p>Hello! I'm your Azure-powered SafeWay AI Assistant. I can analyze your safety data to prevent future incidents:</p>
+                                <ul class="ai-suggestions">
+                                    <li><button class="ai-suggestion-btn" data-query="How does Azure AI analyze my safety patterns?">How does Azure AI analyze my safety patterns?</button></li>
+                                    <li><button class="ai-suggestion-btn" data-query="What predictive insights can you provide?">What predictive insights can you provide?</button></li>
+                                    <li><button class="ai-suggestion-btn" data-query="How has Azure AI helped reduce crime?">How has Azure AI helped reduce crime?</button></li>
+                                    <li><button class="ai-suggestion-btn" data-query="What safety trends are you seeing in my area?">What safety trends are you seeing in my area?</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ai-chat-input">
+                        <input type="text" id="ai-user-input" placeholder="Ask me anything about safety...">
+                        <button id="ai-send-btn">
+                            <span class="material-icons">send</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="history.js"></script>
+    <script src="voice-detection.js"></script>
+    <script src="ai-assistant.js"></script>
+</body>
+</html>
+

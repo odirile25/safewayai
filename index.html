@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SafeWayAI</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4285F4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="images/icon-192.png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places"></script>
+    <style>
+        /* Mobile-specific styles */
+        body {
+            overscroll-behavior: none;
+            -webkit-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        /* Status bar styling for iOS */
+        @supports (-webkit-touch-callout: none) {
+            .app-container {
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+        }
+
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+        }
+
+        .install-prompt p {
+            margin: 0;
+            flex: 1;
+            padding-right: 10px;
+            color: white;
+        }
+
+        .install-button {
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        @media (display-mode: standalone) {
+            .install-prompt {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Install Prompt -->
+    <div class="install-prompt" id="install-prompt">
+        <p>Install SafeWayAI on your device for the best experience</p>
+        <button class="install-button" id="install-button">Install</button>
+    </div>
+
+    <div class="app-container">
+        <!-- Map Background -->
+        <div id="map-background"></div>
+
+        <!-- App Content -->
+        <div class="app-content">
+            <!-- Header -->
+            <header class="app-header">
+                <button id="menu-toggle" class="icon-button">
+                    <span class="material-icons">menu</span>
+                </button>
+                <a href="index.html" class="app-title">
+                    <img src="images/safeway-logo-header.svg" alt="SafeWay Logo" class="header-logo">
+                </a>
+                <button class="user-avatar" onclick="window.location.href='profile.html'">
+                    <span class="material-icons">account_circle</span>
+                </button>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Safe Route Card -->
+                <div class="safe-route-card">
+                    <div class="route-card-icon">
+                        <span class="material-icons">route</span>
+                    </div>
+                    <div class="route-card-content">
+                        <h2>Find Your Safest Route</h2>
+                        <p>AI-powered navigation that prioritizes your safety by analyzing crime data, lighting conditions, and more.</p>
+                        <button id="get-safe-route-btn" class="primary-button" onclick="window.location.href='saferoute.html'">
+                            <span class="material-icons">navigation</span>
+                            Get Safe Route
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Safety Tips Card -->
+                <div class="safety-tips-card">
+                    <h3>Safety Tips</h3>
+                    <ul class="tips-list">
+                        <li>
+                            <span class="material-icons">visibility</span>
+                            <span>Stay in well-lit, populated areas when walking at night</span>
+                        </li>
+                        <li>
+                            <span class="material-icons">share_location</span>
+                            <span>Share your location with trusted contacts during travel</span>
+                        </li>
+                        <li>
+                            <span class="material-icons">phone_in_talk</span>
+                            <span>Keep your phone charged and easily accessible</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Social Impact Banner -->
+                <div class="social-impact-banner">
+                    <p>Your safety choices help improve community safety for everyone</p>
+                </div>
+            </main>
+
+            <!-- Emergency Button -->
+            <div class="emergency-button">
+                <button class="icon-button emergency">
+                    <span class="material-icons">emergency</span>
+                </button>
+            </div>
+
+            <!-- Status Icon -->
+            <div class="status-icon-button">
+                <button class="icon-button status">
+                    <span class="material-icons">shield</span>
+                </button>
+            </div>
+
+            <!-- AI Assistant Button -->
+            <div class="ai-assistant-button">
+                <button id="ai-assistant-btn" class="icon-button ai">
+                    <span class="material-icons">smart_toy</span>
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <footer class="app-footer">
+                <nav class="bottom-nav">
+                    <button class="nav-item active">
+                        <span class="material-icons">home</span>
+                        <span>Home</span>
+                    </button>
+                    <button class="nav-item" onclick="window.location.href='whistleblower.html'">
+                        <span class="material-icons">campaign</span>
+                        <span>Whistle Blower</span>
+                    </button>
+                    <button class="nav-item">
+                        <span class="material-icons">notifications_active</span>
+                        <span>Alerts</span>
+                    </button>
+                    <button class="nav-item" onclick="window.location.href='history.html'">
+                        <span class="material-icons">history</span>
+                        <span>History</span>
+                    </button>
+                </nav>
+            </footer>
+        </div>
+
+        <!-- Side Menu -->
+        <div id="side-menu" class="side-menu">
+            <div class="menu-header">
+                <div class="menu-logo">
+                    <img src="images/safeway-logo-header.svg" alt="SafeWay Logo" class="side-menu-logo">
+                </div>
+                <button id="close-menu" class="icon-button">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <nav class="menu-nav">
+                <a href="#" class="menu-item active">
+                    <span class="material-icons">home</span>
+                    <span>Home</span>
+                </a>
+                <a href="whistleblower.html" class="menu-item">
+                    <span class="material-icons">campaign</span>
+                    <span>Whistle Blower</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="material-icons">notifications_active</span>
+                    <span>Alerts</span>
+                </a>
+                <a href="history.html" class="menu-item">
+                    <span class="material-icons">history</span>
+                    <span>History</span>
+                </a>
+                <a href="saferoute.html" class="menu-item">
+                    <span class="material-icons">route</span>
+                    <span>Safe Route</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- AI Assistant Modal -->
+    <div id="ai-assistant-modal" class="modal">
+        <div class="modal-content ai-assistant-modal-content">
+            <div class="modal-header">
+                <div class="ai-assistant-header">
+                    <div class="ai-logo-container">
+                        <img src="images/safeway-logo-header.svg" alt="SafeWay Logo" class="ai-modal-logo">
+                    </div>
+                    <h3>AI Assistant</h3>
+                </div>
+                <button class="close-modal-btn">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="ai-chat-container">
+                    <div id="ai-chat-messages" class="ai-chat-messages">
+                        <div class="ai-message">
+                            <div class="ai-avatar">
+                                <span class="material-icons">smart_toy</span>
+                            </div>
+                            <div class="message-content">
+                                <p>Hello! I'm your Azure-powered SafeWay AI Assistant. I can help prevent crime and keep you safe with:</p>
+                                <ul class="ai-suggestions">
+                                    <li><button class="ai-suggestion-btn" data-query="Find me a safe route home">Find me a safe route home</button></li>
+                                    <li><button class="ai-suggestion-btn" data-query="How does Azure AI prevent crime?">How does Azure AI prevent crime?</button></li>
+                                    <li><button class="ai-suggestion-btn" data-query="What are your crime prevention statistics?">What are your crime prevention statistics?</button></li>
+                                    <li><button class="ai-suggestion-btn" data-query="How does the community safety network work?">How does the community safety network work?</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ai-chat-input">
+                        <input type="text" id="ai-user-input" placeholder="Ask me anything about safety...">
+                        <button id="ai-send-btn">
+                            <span class="material-icons">send</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="voice-detection.js"></script>
+    <script src="ai-assistant.js"></script>
+
+    <script>
+        // Register service worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+
+        // PWA installation prompt
+        let deferredPrompt;
+        const installPrompt = document.getElementById('install-prompt');
+        const installButton = document.getElementById('install-button');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later
+            deferredPrompt = e;
+            // Show the install prompt
+            installPrompt.style.display = 'flex';
+        });
+
+        installButton.addEventListener('click', () => {
+            // Hide the app provided install prompt
+            installPrompt.style.display = 'none';
+            // Show the browser install prompt
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                deferredPrompt = null;
+            });
+        });
+
+        // Hide install prompt when in standalone mode
+        window.addEventListener('appinstalled', (evt) => {
+            installPrompt.style.display = 'none';
+        });
+
+        // Check if already in standalone mode
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            installPrompt.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
