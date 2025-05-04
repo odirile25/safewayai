@@ -1,6 +1,19 @@
 // Safe Route functionality
 
-document.addEventListener('DOMContentLoaded', function() {
+// Global callback function for Google Maps API
+window.initMapCallback = function() {
+    // Check if we're on the saferoute page
+    if (document.getElementById('route-map')) {
+        // Initialize the map when the DOM is fully loaded
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            initializeRouteMap();
+        } else {
+            document.addEventListener('DOMContentLoaded', initializeRouteMap);
+        }
+    }
+};
+
+function initializeRouteMap() {
     // Initialize map and route elements
     const routeMap = document.getElementById('route-map');
     const startLocationInput = document.getElementById('start-location');
@@ -47,48 +60,62 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize Google Maps
     function initMap() {
-        // Default to Johannesburg if location not available
-        const defaultLocation = { lat: -26.2041, lng: 28.0473 };
+        // Check if route-map element exists
+        if (!routeMap) {
+            console.error("Route map element not found");
+            return;
+        }
 
-        // Create the map
-        map = new google.maps.Map(routeMap, {
-            center: defaultLocation,
-            zoom: 14,
-            mapTypeControl: true,
-            mapTypeControlOptions: {
-                style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-                position: google.maps.ControlPosition.TOP_RIGHT
-            },
-            zoomControl: true,
-            zoomControlOptions: {
-                position: google.maps.ControlPosition.RIGHT_TOP
-            },
-            scaleControl: true,
-            streetViewControl: true,
-            streetViewControlOptions: {
-                position: google.maps.ControlPosition.RIGHT_TOP
-            },
-            fullscreenControl: true
-        });
+        try {
+            // Default to Johannesburg if location not available
+            const defaultLocation = { lat: -26.2041, lng: 28.0473 };
 
-        // Initialize the directions service and renderer
-        directionsService = new google.maps.DirectionsService();
-        directionsRenderer = new google.maps.DirectionsRenderer({
-            map: map,
-            suppressMarkers: false,
-            polylineOptions: {
-                strokeColor: '#2196F3',
-                strokeWeight: 5,
-                strokeOpacity: 0.7
+            // Create the map
+            map = new google.maps.Map(routeMap, {
+                center: defaultLocation,
+                zoom: 14,
+                mapTypeControl: true,
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                    position: google.maps.ControlPosition.TOP_RIGHT
+                },
+                zoomControl: true,
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.RIGHT_TOP
+                },
+                scaleControl: true,
+                streetViewControl: true,
+                streetViewControlOptions: {
+                    position: google.maps.ControlPosition.RIGHT_TOP
+                },
+                fullscreenControl: true
+            });
+
+            // Initialize the directions service and renderer
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer({
+                map: map,
+                suppressMarkers: false,
+                polylineOptions: {
+                    strokeColor: '#2196F3',
+                    strokeWeight: 5,
+                    strokeOpacity: 0.7
+                }
+            });
+
+            // Initialize Places Autocomplete for inputs
+            if (startLocationInput && endLocationInput) {
+                const startAutocomplete = new google.maps.places.Autocomplete(startLocationInput);
+                const endAutocomplete = new google.maps.places.Autocomplete(endLocationInput);
             }
-        });
 
-        // Initialize Places Autocomplete for inputs
-        const startAutocomplete = new google.maps.places.Autocomplete(startLocationInput);
-        const endAutocomplete = new google.maps.places.Autocomplete(endLocationInput);
+            // Get current location
+            getCurrentLocation();
 
-        // Get current location
-        getCurrentLocation();
+            console.log("Route map initialized successfully");
+        } catch (error) {
+            console.error("Error initializing route map:", error);
+        }
     }
 
     // Get current location
@@ -690,4 +717,83 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize the map
     initMap();
-});
+
+    // Add event listeners for buttons
+    if (currentLocationBtn) {
+        currentLocationBtn.addEventListener('click', function() {
+            if (currentPosition) {
+                // Reverse geocode to get address
+                const geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ location: currentPosition }, function(results, status) {
+                    if (status === 'OK' && results[0]) {
+                        startLocationInput.value = results[0].formatted_address;
+                    } else {
+                        startLocationInput.value = `Current Location (${currentPosition.lat.toFixed(6)}, ${currentPosition.lng.toFixed(6)})`;
+                    }
+                });
+            } else {
+                alert("Unable to determine your current location. Please try again or enter manually.");
+            }
+        });
+    }
+
+    // Handle travel mode selection
+    if (travelModeBtns) {
+        travelModeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                travelModeBtns.forEach(b => b.classList.remove('active'));
+
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                // Update selected travel mode
+                selectedTravelMode = this.getAttribute('data-mode');
+            });
+        });
+    }
+
+    // Find route button click handler
+    if (findRouteBtn) {
+        findRouteBtn.addEventListener('click', function() {
+            // Validate inputs
+            if (!startLocationInput.value.trim()) {
+                alert("Please enter a starting location");
+                return;
+            }
+
+            if (!endLocationInput.value.trim()) {
+                alert("Please enter a destination");
+                return;
+            }
+
+            // Calculate route
+            calculateRoute(startLocationInput.value, endLocationInput.value, selectedTravelMode);
+        });
+    }
+
+    // Start navigation button
+    if (startNavigationBtn) {
+        startNavigationBtn.addEventListener('click', function() {
+            // In a real app, this would launch turn-by-turn navigation
+            // For demo purposes, we'll just show an alert
+            alert("Navigation started! In a real app, this would launch turn-by-turn navigation.");
+
+            // Open Google Maps with the route (as a demonstration)
+            const start = encodeURIComponent(startLocationInput.value);
+            const end = encodeURIComponent(endLocationInput.value);
+            const mode = selectedTravelMode.toLowerCase();
+
+            window.open(`https://www.google.com/maps/dir/?api=1&origin=${start}&destination=${end}&travelmode=${mode}`, '_blank');
+        });
+    }
+
+    // New route button
+    if (newRouteBtn) {
+        newRouteBtn.addEventListener('click', function() {
+            // Hide results and scroll back to form
+            routeResults.style.display = 'none';
+            document.querySelector('.route-form').scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+}
