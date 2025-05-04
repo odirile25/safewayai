@@ -1,0 +1,239 @@
+/* Whistle Blower Screen Styles */
+
+/* Page Title */
+.page-title {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.page-title h2 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    color: #2196f3;
+}
+
+.page-title p {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.9rem;
+}
+
+/* Report Form */
+.report-form {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.report-form h3 {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+    color: #2196f3;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
+}
+
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.location-input {
+    display: flex;
+    align-items: center;
+}
+
+.location-input .form-control {
+    flex: 1;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.location-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    cursor: pointer;
+}
+
+.form-actions {
+    margin-top: 24px;
+}
+
+/* Reports Log */
+.reports-log {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.log-header h3 {
+    font-size: 1.2rem;
+    color: #2196f3;
+}
+
+.log-filter {
+    display: flex;
+    align-items: center;
+}
+
+.log-filter label {
+    margin-right: 8px;
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.log-filter select {
+    padding: 6px 24px 6px 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+}
+
+.log-entries {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.log-entry {
+    display: flex;
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.log-entry:last-child {
+    border-bottom: none;
+}
+
+.entry-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.entry-icon.suspicious {
+    background-color: #ff9800; /* Orange */
+}
+
+.entry-icon.hazard {
+    background-color: #f44336; /* Red */
+}
+
+.entry-icon.crime {
+    background-color: #9c27b0; /* Purple */
+}
+
+.entry-icon.infrastructure {
+    background-color: #795548; /* Brown */
+}
+
+.entry-icon.other {
+    background-color: #607d8b; /* Blue Grey */
+}
+
+.entry-content {
+    flex: 1;
+}
+
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.entry-header h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.entry-time {
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.entry-content p {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.entry-location {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.entry-location .material-icons {
+    font-size: 16px;
+    margin-right: 4px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    .log-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .log-filter {
+        margin-top: 8px;
+    }
+}
