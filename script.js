@@ -3,12 +3,27 @@ let map;
 let userMarker;
 const defaultLocation = { lat: -26.2041, lng: 28.0473 }; // Default to Johannesburg if location not available
 
+// Global callback function for Google Maps API
+window.initMap = function() {
+    // Check if we're on the index page with map-background element
+    if (document.getElementById("map-background")) {
+        getCurrentLocation();
+    }
+};
+
 // Function to initialize the map
 function initMap(position) {
     // Get user's location or use default
     const userLocation = position ?
         { lat: position.coords.latitude, lng: position.coords.longitude } :
         defaultLocation;
+
+    // Check if map-background element exists
+    const mapElement = document.getElementById("map-background");
+    if (!mapElement) {
+        console.error("Map element not found");
+        return;
+    }
 
     // Custom map style for better visibility
     const mapStyles = [
@@ -22,90 +37,96 @@ function initMap(position) {
         }
     ];
 
-    // Create the map
-    map = new google.maps.Map(document.getElementById("map-background"), {
-        center: userLocation,
-        zoom: 15,
-        mapTypeControl: true,
-        mapTypeControlOptions: {
-            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-            position: google.maps.ControlPosition.TOP_RIGHT
-        },
-        zoomControl: true,
-        zoomControlOptions: {
-            position: google.maps.ControlPosition.RIGHT_TOP
-        },
-        scaleControl: true,
-        streetViewControl: true,
-        streetViewControlOptions: {
-            position: google.maps.ControlPosition.RIGHT_TOP
-        },
-        fullscreenControl: true,
-        styles: mapStyles
-    });
-
-    // Add a marker for the user's location
-    userMarker = new google.maps.Marker({
-        position: userLocation,
-        map: map,
-        icon: {
-            path: google.maps.SymbolPath.CIRCLE,
-            scale: 10,
-            fillColor: "#ff3333",
-            fillOpacity: 1,
-            strokeColor: "#ffffff",
-            strokeWeight: 3
-        },
-        title: "Your Location"
-    });
-
-    // Add a circle around the user's location
-    const circle = new google.maps.Circle({
-        strokeColor: "#2196F3",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: "#2196F3",
-        fillOpacity: 0.1,
-        map: map,
-        center: userLocation,
-        radius: 500, // 500 meters
-        clickable: false
-    });
-
-    // Add a pulsing effect to make the marker more visible
-    const pulseMarker = new google.maps.Marker({
-        position: userLocation,
-        map: map,
-        icon: {
-            path: google.maps.SymbolPath.CIRCLE,
-            scale: 20,
-            fillColor: "#ff3333",
-            fillOpacity: 0,
-            strokeColor: "#ff3333",
-            strokeWeight: 2,
-            strokeOpacity: 0.3
-        },
-        zIndex: 1
-    });
-
-    // Animate the pulse marker
-    let direction = 1;
-    let scale = 20;
-    setInterval(() => {
-        scale += direction;
-        if (scale > 30) direction = -1;
-        if (scale < 20) direction = 1;
-
-        pulseMarker.setIcon({
-            path: google.maps.SymbolPath.CIRCLE,
-            scale: scale,
-            fillColor: "#ff3333",
-            fillOpacity: 0,
-            strokeColor: "#ff3333",
-            strokeWeight: 2,
-            strokeOpacity: 0.3
+    try {
+        // Create the map
+        map = new google.maps.Map(mapElement, {
+            center: userLocation,
+            zoom: 15,
+            mapTypeControl: true,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                position: google.maps.ControlPosition.TOP_RIGHT
+            },
+            zoomControl: true,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            scaleControl: true,
+            streetViewControl: true,
+            streetViewControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            fullscreenControl: true,
+            styles: mapStyles
         });
-    }, 50);
+
+        // Add a marker for the user's location
+        userMarker = new google.maps.Marker({
+            position: userLocation,
+            map: map,
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 10,
+                fillColor: "#ff3333",
+                fillOpacity: 1,
+                strokeColor: "#ffffff",
+                strokeWeight: 3
+            },
+            title: "Your Location"
+        });
+
+        // Add a circle around the user's location
+        const circle = new google.maps.Circle({
+            strokeColor: "#2196F3",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#2196F3",
+            fillOpacity: 0.1,
+            map: map,
+            center: userLocation,
+            radius: 500, // 500 meters
+            clickable: false
+        });
+
+        // Add a pulsing effect to make the marker more visible
+        const pulseMarker = new google.maps.Marker({
+            position: userLocation,
+            map: map,
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 20,
+                fillColor: "#ff3333",
+                fillOpacity: 0,
+                strokeColor: "#ff3333",
+                strokeWeight: 2,
+                strokeOpacity: 0.3
+            },
+            zIndex: 1
+        });
+
+        // Animate the pulse marker
+        let direction = 1;
+        let scale = 20;
+        setInterval(() => {
+            scale += direction;
+            if (scale > 30) direction = -1;
+            if (scale < 20) direction = 1;
+
+            pulseMarker.setIcon({
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: scale,
+                fillColor: "#ff3333",
+                fillOpacity: 0,
+                strokeColor: "#ff3333",
+                strokeWeight: 2,
+                strokeOpacity: 0.3
+            });
+        }, 50);
+
+        console.log("Map initialized successfully");
+    } catch (error) {
+        console.error("Error initializing map:", error);
+    }
 }
 
 // Get user's current location
@@ -134,9 +155,6 @@ function getCurrentLocation() {
         initMap(null); // Use default location
     }
 }
-
-// Initialize the map when the page loads
-window.addEventListener('load', getCurrentLocation);
 
 // Side menu functionality
 const menuToggle = document.getElementById('menu-toggle');
